@@ -5,9 +5,8 @@
 *.sh    text eol=lf
 *.py    text eol=lf
 *.yml   text eol=lf
-*.ics   text eol=lf
-.githooks/* text eol=lf
 
 # IMPORTANTE: el .ics NO se toca. RFC 5545 exige CRLF exactos y cualquier
 # conversión de git (LF<->CRLF) puede romper la suscripción del calendario.
+# `-text` = trátalo como binario: se guarda y se sirve byte a byte.
 *.ics -text
