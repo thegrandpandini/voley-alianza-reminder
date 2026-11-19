@@ -42,6 +42,15 @@ Set-Location -LiteralPath $PSScriptRoot
 function Paso($texto) { Write-Host "`n> $texto" -ForegroundColor Cyan }
 function Ok($texto)   { Write-Host "  [OK] $texto" -ForegroundColor Green }
 function Mal($texto)  { Write-Host "  [ERROR] $texto" -ForegroundColor Red }
+function Aviso($texto){ Write-Host "  [!] $texto" -ForegroundColor DarkYellow }
+
+function Get-PythonExe {
+    foreach ($candidato in @("python", "py", "python3")) {
+        $cmd = Get-Command $candidato -ErrorAction SilentlyContinue
+        if ($cmd) { return $cmd.Source }
+    }
+    return $null
+}
 
 # --- 1. git disponible -------------------------------------------------------
 Paso "Comprobando git"
@@ -140,7 +149,42 @@ if ($LASTEXITCODE -ne 0) {
     exit 1
 }
 
-# --- 7. remoto ---------------------------------------------------------------
+# --- 7. integrar lo que el robot ya subio ------------------------------------
+# El workflow hace un commit diario con el .ics actualizado. Si no integramos
+# esos commits, GitHub rechaza el push con "fetch first".
+Paso "Comprobando si GitHub tiene commits nuevos"
+git fetch origin 2>&1 | Out-Null
+if ($LASTEXITCODE -ne 0) {
+    Aviso "No pude consultar GitHub (sin red o sin sesion). Sigo igual."
+} else {
+    git rev-parse --verify --quiet origin/main 2>&1 | Out-Null
+    if ($LASTEXITCODE -eq 0) {
+        $behind = [int](git rev-list --count HEAD..origin/main 2>&1)
+        if ($behind -gt 0) {
+            Write-Host "  Hay $behind commit(s) en GitHub que no tienes (los crea el robot)."
+            # Usamos merge (no rebase) porque `git commit --no-edit` cierra el merge
+            # sin abrir editor, cosa que un rebase si exige.
+            git merge --no-edit origin/main 2>&1 | Out-Null
+            if ($LASTEXITCODE -ne 0) {
+                Write-Host "  Conflicto en archivos generados; regenero el calendario."
+                $python = Get-PythonExe
+                if ($python) { & $python "sync.py" ics 2>&1 | Out-Null }
+                git add "docs/alianza-lima.ics" 2>&1 | Out-Null
+                git commit --no-edit 2>&1 | Out-Null
+                if ($LASTEXITCODE -ne 0) {
+                    Mal "No logre cerrar la integracion de los cambios de GitHub."
+                    Mal "Arreglo manual:  git merge --abort  y luego  git pull origin main"
+                    exit 1
+                }
+            }
+            Ok "Integrados los cambios de GitHub"
+        } else {
+            Ok "Ya estabas al dia"
+        }
+    }
+}
+
+# --- 8. remoto ---------------------------------------------------------------
 $remoto = "https://github.com/$Usuario/$Repo.git"
 Paso "Conectando con $remoto"
 if (@(git remote) -contains "origin") {
@@ -149,16 +193,22 @@ if (@(git remote) -contains "origin") {
     git remote add origin $remoto
 }
 
-# --- 8. push -----------------------------------------------------------------
+# --- 9. push -----------------------------------------------------------------
 Paso "Subiendo a GitHub (puede abrirse una ventana para iniciar sesion)"
-git push -u origin main
+$pushOut = git push -u origin main 2>&1
 if ($LASTEXITCODE -ne 0) {
-    Mal @"
-El push fallo. Causas tipicas:
-  - Aun no creaste el repositorio en https://github.com/new (publico y vacio).
-  - El usuario '$Usuario' o el repo '$Repo' estan mal escritos.
-  - Se abrio una ventana de inicio de sesion: completala y vuelve a correr esto.
-"@
+    Write-Host ($pushOut | Out-String) -ForegroundColor DarkGray
+    if ($pushOut -match 'fetch first|non-fast-forward') {
+        Mal "GitHub tiene commits que no estan en tu copia."
+        Mal "Vuelve a correr el script: ya integra esos commits automaticamente."
+    } elseif ($pushOut -match 'Authentication failed|could not read Username|SEC_E_NO_CREDENTIALS') {
+        Mal "No se pudo autenticar con GitHub. Vuelve a correrlo y completa la ventana de inicio de sesion."
+    } else {
+        Mal "El push fallo. Causas tipicas:"
+        Write-Host "    - Aun no creaste el repositorio en https://github.com/new (publico y vacio)."
+        Write-Host "    - El usuario '$Usuario' o el repo '$Repo' estan mal escritos."
+        Write-Host "    - Se abrio una ventana de inicio de sesion: completala y reintenta."
+    }
     exit 1
 }
 
