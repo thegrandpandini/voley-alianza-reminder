@@ -76,6 +76,7 @@ jobs:
         run: python sync.py ics
 
       - name: Guardar el .ics en el repositorio
+        id: save
         run: |
           if [ -n "$(git status --porcelain docs/)" ]; then
             git config user.name  "github-actions[bot]"
@@ -83,9 +84,29 @@ jobs:
             git add docs/
             git commit -m "chore: actualizar calendario .ics"
             git push
+            echo "changed=true" >> "$GITHUB_OUTPUT"
           else
+            echo "changed=false" >> "$GITHUB_OUTPUT"
             echo "Sin cambios en el .ics."
           fi
+
+      # GARANTIA ANTI-60-DIAS.
+      # Fuera de temporada no hay partidos, el .ics queda identico byte a byte y
+      # no habria commits. GitHub desactiva los workflows programados tras 60
+      # dias sin actividad en el repo, y NO se reactivan solos: el robot moriria
+      # durante el receso (abril -> septiembre).
+      # Este latido asegura al menos un commit al dia, siempre.
+      - name: Latido diario para no quedar inactivo
+        if: steps.save.outputs.changed == 'false'
+        run: |
+          mkdir -p .github
+          date -u +"%Y-%m-%dT%H:%M:%SZ" > .github/heartbeat.txt
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .github/heartbeat.txt
+          git commit --allow-empty -m "chore: latido diario (temporada baja)"
+          git push
+          echo "Sin partidos nuevos: deje un latido para mantener el workflow activo."
 
       - name: Resumen del día
         if: always()

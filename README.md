@@ -357,6 +357,41 @@ Y cuando coinciden, no repite la misma hora para no ensuciar el evento. Esta reg
 se aplica a mano porque Windows no trae base de datos de zonas horarias
 (`zoneinfo` falla); está cubierta con 16 tests, incluidos los dos cambios de hora.
 
+### Entretiempo: cómo sobrevive el robot cuando no hay partidos
+
+Este es el punto más frágil del proyecto, y conviene entenderlo.
+
+GitHub **desactiva automáticamente los workflows programados** en un repositorio
+público cuando pasan **60 días sin actividad** (un commit, un PR, un issue…). Lo
+importante: **un workflow desactivado no se reactiva solo**. Si eso pasa durante el
+receso (abril → septiembre), al volver la temporada no habría ningún aviso, y el
+calendario se quedaría congelado en silencio.
+
+Aquí estaba el problema real: mientras hay partidos, cada corrida regenera el
+`DTSTAMP` del evento, así que el `.ics` cambia todos los días y hay commit diario.
+Pero **sin partidos** (temporada baja) el archivo queda *idéntico byte a byte*: no
+hay commit, y a los 60 días GitHub apaga el workflow.
+
+La solución está en el workflow, paso *"Latido diario"*:
+
+```
+si el .ics NO cambió  ->  escribe .github/heartbeat.txt con la fecha y lo commitea
+```
+
+Así hay **al menos un commit cada día del año**, haya o no partidos. El workflow
+nunca se queda inactivo.
+
+**Si algún día sospechas que se detuvo:**
+
+1. Abre la pestaña **Actions** del repositorio.
+2. Si ves un aviso amarillo *"Scheduled workflows have been suspended due to
+   repository inactivity"*, pulsa **Enable workflow**.
+3. Comprueba que `.github/heartbeat.txt` tiene una fecha reciente. Si está
+   congelado, el cron dejó de correr.
+
+Dato útil: **`workflow_dispatch` sigue funcionando aunque el cron esté suspendido**,
+así que el botón *Run workflow* siempre es una salida de emergencia.
+
 ### Cambiar de equipo
 
 ```powershell
@@ -380,9 +415,11 @@ Pages tarda 1–2 minutos tras activarlo. Revisa que la *Source* sea
 `main` + `/docs`. La URL exacta aparece en Settings → Pages.
 
 **El `.ics` no cambia nunca**
-Mira la pestaña **Actions**: si el workflow falló, ejecuta *Run workflow*. GitHub
-desactiva los workflows programados tras **60 días sin actividad** en el repo; si
-te llega ese correo, entra a Actions y pulsa *Enable workflow*.
+Mira la pestaña **Actions**: si el workflow falló, ejecuta *Run workflow*. Si el
+cron está suspendido por inactividad, verás un aviso amarillo en Actions; pulsa
+*Enable workflow* (ver la sección **Entretiempo**). El archivo
+`.github/heartbeat.txt` es el termómetro: si su fecha es de hace días, el robot
+está parado.
 
 **`No encontré client_secret.json`** (Camino B)
 El paso B4 quedó a medias: descarga el JSON del cliente OAuth tipo *Desktop app*.

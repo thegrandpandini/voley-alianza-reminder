@@ -97,5 +97,27 @@ class TestIcs(unittest.TestCase):
         self.assertNotIn("BEGIN:VEVENT", text)
 
 
+class TestFeedStability(unittest.TestCase):
+    """De esto depende que GitHub no desactive el robot en temporada baja.
+
+    Mientras hay partidos, cada corrida regenera DTSTAMP y el .ics cambia ->
+    hay commit diario -> el repositorio sigue activo.
+
+    Sin partidos no hay DTSTAMP: el archivo queda identico byte a byte, no hay
+    commit, y tras 60 dias sin actividad GitHub desactiva el workflow (y no lo
+    reactiva solo). Por eso el workflow escribe .github/heartbeat.txt.
+    """
+
+    def test_empty_feed_is_byte_identical_across_runs(self):
+        self.assertEqual(ics.build_calendar([]), ics.build_calendar([]))
+
+    def test_empty_feed_has_no_timestamp_at_all(self):
+        text = ics.build_calendar([])
+        self.assertNotIn("DTSTAMP", text)
+
+    def test_feed_with_events_carries_a_timestamp(self):
+        self.assertIn("DTSTAMP:", ics.build_calendar([sample()]))
+
+
 if __name__ == "__main__":
     unittest.main()
