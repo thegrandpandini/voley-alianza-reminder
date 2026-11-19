@@ -73,10 +73,12 @@ Deberías ver algo así:
 ✅ 2 partido(s) por jugar:
 
   Sun 22/11/2026 18:30  🏐 Alianza Lima vs Atlético Atenea · LNSV
-                  📍 Polideportivo Luisa Fuentes
+   📍 Polideportivo Luisa Fuentes
   Sat 28/11/2026 17:00  🏐 Alianza Lima vs Perú U-19 · LNSV
-                  📍 Polideportivo Luisa Fuentes
+   📍 Polideportivo Luisa Fuentes
 ```
+
+Las horas salen en **hora del Este** (configurable, ver `VOLEY_DISPLAY_TZ`).
 
 Si ves eso, **la parte difícil ya está resuelta**. Ahora elige el camino.
 
@@ -316,6 +318,7 @@ Variables de entorno (o edita `voley/config.py`):
 | `VOLEY_CALENDAR_ID` | `primary` | Otro calendario (sólo Camino B) |
 | `VOLEY_TRANSPARENCY` | `transparent` | `opaque` para que el partido bloquee la agenda |
 | `VOLEY_LOOKAHEAD_DAYS` | `400` | Cuántos días hacia adelante revisar |
+| `VOLEY_DISPLAY_TZ` | `America/New_York` | Zona en que se escriben las horas legibles: `America/New_York`, `America/Lima` o `UTC` |
 
 ```powershell
 $env:VOLEY_REMINDERS = "1440,120,30"; python sync.py ics
@@ -324,6 +327,35 @@ $env:VOLEY_REMINDERS = "1440,120,30"; python sync.py ics
 > En GitHub Actions, para cambiar la configuración sin tocar el código: agrega esas
 > variables como *Variables* del repo (Settings → Secrets and variables → Actions →
 > **Variables**) y el workflow las heredará. O edita `voley/config.py` directamente.
+
+### Cómo se manejan las horas (importante)
+
+Los eventos **se guardan en UTC**, que es una hora absoluta. Eso significa que cada
+dispositivo los muestra en *su* hora local automáticamente: si abres el calendario
+en Nueva York sale en hora del Este, y si lo abres en Lima sale en hora de Lima.
+La hora del partido no cambia, sólo la forma de mostrarla.
+
+`VOLEY_DISPLAY_TZ` sólo decide **el texto** dentro de la descripción del evento (y
+la salida de `python sync.py check`). Por defecto es hora del Este.
+
+Ojo con un detalle que confunde: **Lima es UTC-5 todo el año**, pero Nueva York
+cambia de hora dos veces al año:
+
+| Época | Nueva York | Diferencia |
+|---|---|---|
+| Nov–Mar (invierno) | EST, UTC-5 | Idéntica a Lima |
+| Mar–Nov (verano) | EDT, UTC-4 | Los partidos se ven **1 hora más tarde** |
+
+Por eso, en pleno verano, un partido de las 18:30 en Lima se ve a las **19:30** del
+Este. La descripción del evento lo aclara mostrando ambas horas:
+
+```
+Inicio: 15/07/2026 19:30 (hora del Este) · 18:30 en Lima
+```
+
+Y cuando coinciden, no repite la misma hora para no ensuciar el evento. Esta regla
+se aplica a mano porque Windows no trae base de datos de zonas horarias
+(`zoneinfo` falla); está cubierta con 16 tests, incluidos los dos cambios de hora.
 
 ### Cambiar de equipo
 
@@ -375,9 +407,10 @@ anticipación). El robot corre a diario, así que los captura en cuanto salgan.
 python -m unittest discover -s tests -t . -v
 ```
 
-30 pruebas: que el filtro por ID rechace a *Deportivo Alianza*, que los segundos
+46 pruebas: que el filtro por ID rechace a *Deportivo Alianza*, que los segundos
 basura se descarten, que los avisos del `.ics` sean válidos, la conversión a UTC,
-el escapado y plegado de líneas, y que no dependamos de `?teams=`.
+el escapado y plegado de líneas, que no dependamos de `?teams=`, y las reglas de
+horario de verano del Este (incluidos los dos cambios de hora).
 
 Los fixtures son respuestas reales de la API. Para refrescarlos:
 
@@ -391,16 +424,17 @@ python tests/capture_fixture.py
 
 ```
 voley/
-  config.py    Configuración (IDs, avisos, zona horaria)
+  config.py    Configuración (IDs, avisos, zonas horarias)
   fpv.py       Cliente de la API de la FPV (paginación, reintentos)
   match.py     Modelo del partido + filtro por ID de equipo
   service.py   Une lo anterior en "qué partidos vienen"
+  tz.py        Hora del Este / Perú sin depender de tzdata
   ics.py       Generador de archivos .ics (RFC 5545)
   auth.py      Login OAuth con Google (sólo librería estándar)
   gcal.py      Cliente REST de Google Calendar
 sync.py        CLI: check / ics / login / sync
 publicar_en_github.ps1   Publica el repo en GitHub (con revisión de credenciales)
-tests/         30 pruebas + fixtures reales
+tests/         46 pruebas + fixtures reales
 .github/       Workflow diario
 docs/          El .ics publicado (GitHub Pages)
 ```

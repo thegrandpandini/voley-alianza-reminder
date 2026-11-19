@@ -7,7 +7,7 @@ import html
 from dataclasses import dataclass
 from datetime import datetime, timedelta
 
-from . import config
+from . import config, tz
 
 
 @dataclass(frozen=True)
@@ -50,7 +50,7 @@ class Match:
             f"{self.home} vs {self.away}",
             f"Competencia: {self.competition}",
             f"Sede: {self.venue or 'por confirmar'}",
-            f"Inicio: {self.start.strftime('%d/%m/%Y %H:%M')} (hora Perú)",
+            f"Inicio: {tz.describe_start(self.start)}",
         ]
         if self.is_finished:
             lines.append("Estado en la FPV: resultado publicado.")

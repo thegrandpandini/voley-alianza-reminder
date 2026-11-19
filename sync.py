@@ -20,15 +20,15 @@ if hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 import argparse
-from datetime import datetime
+from datetime import datetime, timezone
 
-from voley import auth, config, gcal, ics, service
+from voley import auth, config, gcal, ics, service, tz
 
 
 def _fmt(item) -> str:
-    """Línea legible de un partido."""
-    when = item.start.strftime("%a %d/%m/%Y %H:%M")
-    return f"  {when}  {item.summary}\n{'':>18}📍 {item.venue or 'sede por confirmar'}"
+    """Línea legible de un partido, en la zona horaria configurada."""
+    when = tz.describe_short(item.start)
+    return f"  {when}  {item.summary}\n   📍 {item.venue or 'sede por confirmar'}"
 
 
 def cmd_check(args: argparse.Namespace) -> int:
@@ -128,7 +128,8 @@ def main(argv: list[str] | None = None) -> int:
 
     if args.command == "check":
         print(f"FPV: {config.FPV_BASE}")
-        print(f"Hoy: {datetime.now(config.PERU_TZ):%Y-%m-%d %H:%M} (América/Lima)")
+        print(f"Hoy: {tz.to_display(datetime.now(timezone.utc)).strftime('%Y-%m-%d %H:%M')} "
+              f"({tz.display_label()})")
 
     try:
         return args.func(args)

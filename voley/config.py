@@ -68,6 +68,14 @@ LEAGUE_ID = _number("VOLEY_LEAGUE_ID", 0)
 TIMEZONE_NAME = "America/Lima"
 PERU_TZ = timezone(timedelta(hours=-5), TIMEZONE_NAME)
 
+# Zona horaria en la que se ESCRIBEN las horas legibles del evento (y del
+# comando `check`). No afecta al momento del partido: los eventos se guardan en
+# UTC, así que cada dispositivo los muestra en su propia hora.
+#   "America/New_York" -> hora del Este de EE. UU. (con horario de verano)
+#   "America/Lima"     -> hora de Perú
+#   "UTC"              -> UTC
+DISPLAY_TZ = _text("VOLEY_DISPLAY_TZ", "America/New_York")
+
 # --- Calendario --------------------------------------------------------------
 CALENDAR_ID = _text("VOLEY_CALENDAR_ID", "primary")
 

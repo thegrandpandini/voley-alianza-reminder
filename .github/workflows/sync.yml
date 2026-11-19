@@ -37,6 +37,7 @@ jobs:
       VOLEY_CALENDAR_ID: ${{ vars.VOLEY_CALENDAR_ID }}
       VOLEY_LOOKAHEAD_DAYS: ${{ vars.VOLEY_LOOKAHEAD_DAYS }}
       VOLEY_TRANSPARENCY: ${{ vars.VOLEY_TRANSPARENCY }}
+      VOLEY_DISPLAY_TZ: ${{ vars.VOLEY_DISPLAY_TZ }}
 
     steps:
       - name: Descargar el repositorio

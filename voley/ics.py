@@ -80,7 +80,7 @@ def build_calendar(matches: list[Match], calendar_name: str = "Alianza Lima Vól
         "CALSCALE:GREGORIAN",
         "METHOD:PUBLISH",
         f"X-WR-CALNAME:{_escape(calendar_name)}",
-        "X-WR-TIMEZONE:America/Lima",
+        f"X-WR-TIMEZONE:{config.DISPLAY_TZ}",
         "REFRESH-INTERVAL;VALUE=DURATION:PT12H",
         "X-PUBLISHED-TTL:PT12H",
     ]
