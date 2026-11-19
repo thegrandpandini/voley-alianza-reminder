@@ -1,0 +1,13 @@
+# Normaliza finales de línea entre Windows/macOS/Linux.
+# eol=lf global: evita que git reescriba los archivos con CRLF en Windows
+# (eso genera warnings y ensucia el repo sin motivo).
+* text=auto eol=lf
+*.sh    text eol=lf
+*.py    text eol=lf
+*.yml   text eol=lf
+*.ics   text eol=lf
+.githooks/* text eol=lf
+
+# IMPORTANTE: el .ics NO se toca. RFC 5545 exige CRLF exactos y cualquier
+# conversión de git (LF<->CRLF) puede romper la suscripción del calendario.
+*.ics -text

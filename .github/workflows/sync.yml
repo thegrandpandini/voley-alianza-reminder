@@ -1,0 +1,93 @@
+name: Sincronizar partidos de Alianza Lima
+
+# Corre todos los días a las 12:00 UTC = 07:00 en Lima.
+# El cron de GitHub Actions puede atrasarse unos minutos; no importa, porque
+# los avisos viven en el calendario (Apple o Google) una vez creados.
+on:
+  schedule:
+    - cron: "0 12 * * *"
+  workflow_dispatch:        # botón "Run workflow" para probar a mano
+  push:
+    branches: [main]
+    paths:
+      - "voley/**"
+      - "sync.py"
+      - ".github/workflows/sync.yml"
+
+permissions:
+  contents: write           # para guardar el .ics actualizado en el repo
+
+concurrency:
+  group: voley-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    # Configuración opcional desde Settings -> Secrets and variables -> Actions
+    # -> pestaña "Variables". Si no defines ninguna, se usan los valores por
+    # defecto de voley/config.py. Las que falten llegan vacías y el código las
+    # ignora (por eso config.py trata "" como "sin definir").
+    env:
+      VOLEY_TEAM_ID: ${{ vars.VOLEY_TEAM_ID }}
+      VOLEY_LEAGUE_ID: ${{ vars.VOLEY_LEAGUE_ID }}
+      VOLEY_REMINDERS: ${{ vars.VOLEY_REMINDERS }}
+      VOLEY_CALENDAR_ID: ${{ vars.VOLEY_CALENDAR_ID }}
+      VOLEY_LOOKAHEAD_DAYS: ${{ vars.VOLEY_LOOKAHEAD_DAYS }}
+      VOLEY_TRANSPARENCY: ${{ vars.VOLEY_TRANSPARENCY }}
+
+    steps:
+      - name: Descargar el repositorio
+        uses: actions/checkout@v4
+
+      - name: Instalar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      # --- Credenciales de Google (opcional) --------------------------------
+      # Si NO configuraste Google Calendar, este paso no hace nada y el resto
+      # sigue funcionando: sólo se actualiza el archivo .ics.
+      - name: Detectar credenciales de Google
+        id: creds
+        env:
+          TOKEN_JSON: ${{ secrets.VOLEY_TOKEN_JSON }}
+        run: |
+          if [ -n "$TOKEN_JSON" ]; then
+            printf '%s' "$TOKEN_JSON" > token.json
+            echo "present=true" >> "$GITHUB_OUTPUT"
+            echo "token.json listo ($(wc -c < token.json) bytes)"
+          else
+            echo "present=false" >> "$GITHUB_OUTPUT"
+            echo "Sin credenciales de Google: sólo se actualizará el .ics."
+          fi
+
+      - name: Ver los próximos partidos
+        run: python sync.py check
+
+      - name: Sincronizar con Google Calendar
+        if: steps.creds.outputs.present == 'true'
+        run: python sync.py sync
+
+      - name: Generar el archivo .ics
+        run: python sync.py ics
+
+      - name: Guardar el .ics en el repositorio
+        run: |
+          if [ -n "$(git status --porcelain docs/)" ]; then
+            git config user.name  "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add docs/
+            git commit -m "chore: actualizar calendario .ics"
+            git push
+          else
+            echo "Sin cambios en el .ics."
+          fi
+
+      - name: Resumen del día
+        if: always()
+        run: |
+          echo "## Partidos de Alianza Lima" >> "$GITHUB_STEP_SUMMARY"
+          python sync.py check >> "$GITHUB_STEP_SUMMARY" 2>&1 || true

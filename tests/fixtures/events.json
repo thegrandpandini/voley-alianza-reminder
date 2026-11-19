@@ -1,0 +1,146 @@
+[
+ {
+  "id": 8165,
+  "date": "2026-02-21T19:30:17",
+  "slug": "alianza-lima-sesi-bauru",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/alianza-lima-sesi-bauru/",
+  "title": {
+   "rendered": "Alianza Lima &#8211; Sesi Bauru"
+  },
+  "teams": [
+   138,
+   7722
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   240
+  ],
+  "seasons": [
+   239
+  ],
+  "minutes": "150"
+ },
+ {
+  "id": 7800,
+  "date": "2026-02-19T17:00:16",
+  "slug": "alianza-lima-usmp-4",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/alianza-lima-usmp-4/",
+  "title": {
+   "rendered": "Alianza Lima &#8211; USMP"
+  },
+  "teams": [
+   138,
+   1624
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   240
+  ],
+  "seasons": [
+   239
+  ],
+  "minutes": "150"
+ },
+ {
+  "id": 7792,
+  "date": "2026-02-18T17:00:33",
+  "slug": "alianza-lima-banco-republica",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/alianza-lima-banco-republica/",
+  "title": {
+   "rendered": "Alianza Lima &#8211; Banco República"
+  },
+  "teams": [
+   138,
+   7714
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   240
+  ],
+  "seasons": [
+   239
+  ],
+  "minutes": "150"
+ },
+ {
+  "id": 7675,
+  "date": "2026-02-15T17:00:32",
+  "slug": "alianza-lima-geminis-3",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/alianza-lima-geminis-3/",
+  "title": {
+   "rendered": "Alianza Lima &#8211; Géminis"
+  },
+  "teams": [
+   138,
+   1717
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   10
+  ],
+  "seasons": [
+   202
+  ],
+  "minutes": "99"
+ },
+ {
+  "id": 7663,
+  "date": "2026-02-14T14:45:35",
+  "slug": "regatas-lima-soan-4",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/regatas-lima-soan-4/",
+  "title": {
+   "rendered": "Regatas Lima &#8211; Soan"
+  },
+  "teams": [
+   1625,
+   1663
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   10
+  ],
+  "seasons": [
+   202
+  ],
+  "minutes": "102"
+ },
+ {
+  "id": 7634,
+  "date": "2026-02-11T20:00:52",
+  "slug": "usmp-rebaza-acosta-3",
+  "status": "publish",
+  "link": "https://fpv.org.pe/event/usmp-rebaza-acosta-3/",
+  "title": {
+   "rendered": "USMP &#8211; Rebaza Acosta"
+  },
+  "teams": [
+   1624,
+   1627
+  ],
+  "venues": [
+   13
+  ],
+  "leagues": [
+   10
+  ],
+  "seasons": [
+   202
+  ],
+  "minutes": "76"
+ }
+]

@@ -1,0 +1,242 @@
+[
+ {
+  "id": 10175,
+  "name": "Perú U-19",
+  "slug": "peru-u-19",
+  "abbreviation": "PER"
+ },
+ {
+  "id": 7722,
+  "name": "Sesi Vôlei Bauru",
+  "slug": "sesi-volei-bauru-2",
+  "abbreviation": "SVB"
+ },
+ {
+  "id": 7720,
+  "name": "Osasco Voleibol Clube",
+  "slug": "osasco-voleibol-clube-2",
+  "abbreviation": "OVC"
+ },
+ {
+  "id": 7718,
+  "name": "Club UVIV",
+  "slug": "club-uviv-2",
+  "abbreviation": "UVIV"
+ },
+ {
+  "id": 7716,
+  "name": "Club Olympic",
+  "slug": "club-olympic-2",
+  "abbreviation": "COL"
+ },
+ {
+  "id": 7714,
+  "name": "Club Banco República",
+  "slug": "club-banco-republica-2",
+  "abbreviation": "CBR"
+ },
+ {
+  "id": 7706,
+  "name": "CD Boston College Vóleibol",
+  "slug": "cd-boston-college-voleibol-2",
+  "abbreviation": "CDB"
+ },
+ {
+  "id": 7299,
+  "name": "Club Molivoleibol",
+  "slug": "club-molivoleibol",
+  "abbreviation": "MOL"
+ },
+ {
+  "id": 3833,
+  "name": "Turquía U-17",
+  "slug": "turquia-u-17",
+  "abbreviation": "TUR"
+ },
+ {
+  "id": 3831,
+  "name": "Tailandia U-17",
+  "slug": "tailandia-u-17",
+  "abbreviation": "TAI"
+ },
+ {
+  "id": 3829,
+  "name": "República Dominicana U-17",
+  "slug": "republica-dominicana-u-17",
+  "abbreviation": "RDO"
+ },
+ {
+  "id": 3823,
+  "name": "Puerto Rico U-17",
+  "slug": "puerto-rico-u-17",
+  "abbreviation": "PRI"
+ },
+ {
+  "id": 3821,
+  "name": "Perú U-17",
+  "slug": "peru-u-17",
+  "abbreviation": "PER"
+ },
+ {
+  "id": 3819,
+  "name": "México U-17",
+  "slug": "mexico-u-17",
+  "abbreviation": "MEX"
+ },
+ {
+  "id": 3817,
+  "name": "Japón U-17",
+  "slug": "japon-u-17",
+  "abbreviation": "JAP"
+ },
+ {
+  "id": 3815,
+  "name": "Italia U-17",
+  "slug": "italia-u-17",
+  "abbreviation": "ITA"
+ },
+ {
+  "id": 3813,
+  "name": "Egipto U-17",
+  "slug": "egipto-u-17",
+  "abbreviation": "EGI"
+ },
+ {
+  "id": 3811,
+  "name": "Ecuador U-17",
+  "slug": "ecuador-u-17",
+  "abbreviation": "ECU"
+ },
+ {
+  "id": 3809,
+  "name": "Croacia U-17",
+  "slug": "croacia-u-17",
+  "abbreviation": "CRO"
+ },
+ {
+  "id": 3800,
+  "name": "Chinese Taipei U-17",
+  "slug": "chinese-taipei-u-17",
+  "abbreviation": "CHT"
+ },
+ {
+  "id": 3796,
+  "name": "China U-17",
+  "slug": "china-u-17",
+  "abbreviation": "CHI"
+ },
+ {
+  "id": 3794,
+  "name": "Canadá U-17",
+  "slug": "canada-u-17",
+  "abbreviation": "CAN"
+ },
+ {
+  "id": 3792,
+  "name": "Brasil U-17",
+  "slug": "brasil-u-17",
+  "abbreviation": "BRA"
+ },
+ {
+  "id": 3785,
+  "name": "Argentina U-17",
+  "slug": "argentina-u-17",
+  "abbreviation": "ARG"
+ },
+ {
+  "id": 1897,
+  "name": "Club de Voleibol Atlético Faraday",
+  "slug": "club-de-voleibol-atletico-faraday",
+  "abbreviation": "ATF"
+ },
+ {
+  "id": 1895,
+  "name": "Club Cultural, Social y Deportivo Star Net",
+  "slug": "club-cultural-social-y-deportivo-star-net",
+  "abbreviation": "STAR"
+ },
+ {
+  "id": 1893,
+  "name": "Club de Voleibol Kazoku",
+  "slug": "club-de-voleibol-kazoku",
+  "abbreviation": "KAZ"
+ },
+ {
+  "id": 1891,
+  "name": "Club Atlético Atenea",
+  "slug": "club-atletico-atenea",
+  "abbreviation": "AAT"
+ },
+ {
+  "id": 1774,
+  "name": "Deportivo Alianza",
+  "slug": "deportivo-alianza",
+  "abbreviation": "DAL"
+ },
+ {
+  "id": 1772,
+  "name": "Asociación Cultural Deportiva Túpac Amaru",
+  "slug": "asociacion-cultural-deportiva-tupac-amaru",
+  "abbreviation": "TUP"
+ },
+ {
+  "id": 1770,
+  "name": "WANKA Club Deportivo de Voleibol",
+  "slug": "wanka-club-deportivo-de-voleibol",
+  "abbreviation": "WAN"
+ },
+ {
+  "id": 1729,
+  "name": "Club Deportivo Latino Amisa",
+  "slug": "club-deportivo-latino-amisa",
+  "abbreviation": "OLVA"
+ },
+ {
+  "id": 1720,
+  "name": "Circolo Sportivo Italiano",
+  "slug": "circolo-sportivo-italiano",
+  "abbreviation": "CSI"
+ },
+ {
+  "id": 1717,
+  "name": "Club Cultural Deportivo Géminis",
+  "slug": "club-cultural-deportivo-geminis",
+  "abbreviation": "GEM"
+ },
+ {
+  "id": 1663,
+  "name": "Club Deportivo Soan",
+  "slug": "club-deportivo-soan",
+  "abbreviation": "SOAN"
+ },
+ {
+  "id": 1627,
+  "name": "Deportivo Estudiantil Rebaza Acosta",
+  "slug": "deportivo-estudiantil-rebaza-acosta",
+  "abbreviation": "REB"
+ },
+ {
+  "id": 1625,
+  "name": "Club de Regatas Lima",
+  "slug": "club-de-regatas-lima",
+  "abbreviation": "REG"
+ },
+ {
+  "id": 1624,
+  "name": "Asociación Deportiva Universidad San Martín de Porres Voleibol",
+  "slug": "asociacion-deportiva-universidad-san-martin-de-porres-voleibol",
+  "abbreviation": "USMP"
+ },
+ {
+  "id": 138,
+  "name": "Club Alianza Lima",
+  "slug": "club-alianza-lima",
+  "abbreviation": "ALI"
+ },
+ {
+  "id": 137,
+  "name": "Club Universitario de Deportes",
+  "slug": "club-universitario-de-deportes",
+  "abbreviation": "UNI"
+ }
+]

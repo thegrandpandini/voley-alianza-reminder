@@ -1,0 +1,62 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Voley Alianza Lima//Recordatorio FPV//ES
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+X-WR-CALNAME:Alianza Lima Vóley
+X-WR-TIMEZONE:America/Lima
+REFRESH-INTERVAL;VALUE=DURATION:PT12H
+X-PUBLISHED-TTL:PT12H
+BEGIN:VEVENT
+UID:fpv-11174@fpv.org.pe
+DTSTAMP:20261119T175142Z
+DTSTART:20261122T233000Z
+DTEND:20261123T020000Z
+SUMMARY:🏐 Alianza Lima vs Atlético Atenea · LNSV
+DESCRIPTION:Alianza Lima vs Atlético Atenea\nCompetencia: LNSV\nSede: P
+ olideportivo Luisa Fuentes\nInicio: 22/11/2026 18:30 (hora Perú)\n\nFi
+ cha oficial: https://fpv.org.pe/event/alianza-lima-atletico-atenea-3/\n
+ \nGenerado automáticamente por voley-alianza-reminder
+LOCATION:Polideportivo Luisa Fuentes
+URL:https://fpv.org.pe/event/alianza-lima-atletico-atenea-3/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+SEQUENCE:0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Partido de Alianza Lima
+TRIGGER:-PT1440M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Partido de Alianza Lima
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+BEGIN:VEVENT
+UID:fpv-11179@fpv.org.pe
+DTSTAMP:20261119T175142Z
+DTSTART:20261128T220000Z
+DTEND:20261129T003000Z
+SUMMARY:🏐 Alianza Lima vs Perú U-19 · LNSV
+DESCRIPTION:Alianza Lima vs Perú U-19\nCompetencia: LNSV\nSede: Polidep
+ ortivo Luisa Fuentes\nInicio: 28/11/2026 17:00 (hora Perú)\n\nFicha of
+ icial: https://fpv.org.pe/event/alianza-lima-peru/\n\nGenerado automát
+ icamente por voley-alianza-reminder
+LOCATION:Polideportivo Luisa Fuentes
+URL:https://fpv.org.pe/event/alianza-lima-peru/
+TRANSP:TRANSPARENT
+STATUS:CONFIRMED
+SEQUENCE:0
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Partido de Alianza Lima
+TRIGGER:-PT1440M
+END:VALARM
+BEGIN:VALARM
+ACTION:DISPLAY
+DESCRIPTION:Partido de Alianza Lima
+TRIGGER:-PT60M
+END:VALARM
+END:VEVENT
+END:VCALENDAR

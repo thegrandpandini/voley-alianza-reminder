@@ -1,0 +1,26 @@
+[
+ {
+  "id": 77,
+  "name": "Colegio La Salle",
+  "slug": "colegio-la-salle",
+  "abbreviation": null
+ },
+ {
+  "id": 116,
+  "name": "Coliseo Eduardo Dibós",
+  "slug": "coliseo-eduardo-dibos",
+  "abbreviation": null
+ },
+ {
+  "id": 203,
+  "name": "Coliseo Miguel Grau",
+  "slug": "coliseo-miguel-grau",
+  "abbreviation": null
+ },
+ {
+  "id": 13,
+  "name": "Polideportivo Luisa Fuentes",
+  "slug": "polideportivo-luisa-fuentes",
+  "abbreviation": null
+ }
+]
