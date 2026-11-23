@@ -8,34 +8,8 @@ X-WR-TIMEZONE:America/New_York
 REFRESH-INTERVAL;VALUE=DURATION:PT12H
 X-PUBLISHED-TTL:PT12H
 BEGIN:VEVENT
-UID:fpv-11174@fpv.org.pe
-DTSTAMP:20261122T192618Z
-DTSTART:20261122T233000Z
-DTEND:20261123T020000Z
-SUMMARY:🏐 Alianza Lima vs Atlético Atenea · LNSV
-DESCRIPTION:Alianza Lima vs Atlético Atenea\nCompetencia: LNSV\nSede: P
- olideportivo Luisa Fuentes\nInicio: 22/11/2026 18:30 (hora del Este)\n\
- nFicha oficial: https://fpv.org.pe/event/alianza-lima-atletico-atenea-3
- /\n\nGenerado automáticamente por voley-alianza-reminder
-LOCATION:Polideportivo Luisa Fuentes
-URL:https://fpv.org.pe/event/alianza-lima-atletico-atenea-3/
-TRANSP:TRANSPARENT
-STATUS:CONFIRMED
-SEQUENCE:0
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Partido de Alianza Lima
-TRIGGER:-PT1440M
-END:VALARM
-BEGIN:VALARM
-ACTION:DISPLAY
-DESCRIPTION:Partido de Alianza Lima
-TRIGGER:-PT60M
-END:VALARM
-END:VEVENT
-BEGIN:VEVENT
 UID:fpv-11179@fpv.org.pe
-DTSTAMP:20261122T192618Z
+DTSTAMP:20261123T234512Z
 DTSTART:20261128T220000Z
 DTEND:20261129T003000Z
 SUMMARY:🏐 Alianza Lima vs Perú U-19 · LNSV
